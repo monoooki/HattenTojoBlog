@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="<%= @site.meta_description %>" />
+<meta name="keywords" content="<%= @site.meta_keywords %>" />
+<meta http-equiv="Content-Script-type" content="text/javascript">
+<meta http-equiv="Content-Style-type" content="text/css">
+<title><%= @site.title %></title>
+<link href="./js/google-code-prettify/prettify.css" rel="stylesheet">
+<link href="./css/bootstrap-1.0.0.css" rel="stylesheet">
+<link href="./css/style.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<script src="./js/google-code-prettify/prettify.js"></script>
+<script src="./js/application.js"></script>
+<!-- <%= header %> -->
+</head>
+
+<body>
+<div class="container">
+
+<!-- ====================
+	Header
+==================== -->
+<header>
+<h1><img src="./images/logo.png" width="396" height="71" alt="僕は発展途上技術者" /></h1>
+<div id="search">
+	<form action="/search/" method="get" id="">
+	<input type="text" name="query" class="search_field medium">
+	<input type="image" src="images/ico_loope.png" alt="検索する" title="検索する" class="loope" />
+	</form>
+<!-- /div#search --></div>
+</header>
+
+
+<!-- ====================
+	Contents
+==================== -->
+<div class="contents row">
+
+<div class="main-column span11">
+	<div class="entries">
+	<div class="entry">
+	<div class="entry-header">
+		<h2><a href="<%= post.link %>">WordPress のブログを Lokka に移行(第3部) - Redirect プラグインを作りました</a></h2>
+		<div class="entry-date">2011.08.02</div>
+		<div class="meta">
+		<a href="http://b.hatena.ne.jp/entry/xxxmyurlxxx" class="hatena-bookmark-button" data-hatena-bookmark-title="xxxページタイトルxxx" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-url="xxxmyurlxxx" data-count="horizontal" data-via="jishiha" data-lang="ja">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+		<!-- 次のタグを head 要素内または body 終了タグの直前に貼り付けてください -->
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+		  {lang: 'ja'}
+		</script>
+		<!-- 次のタグを +1 ボタンを表示する箇所に貼り付けてください -->
+		<g:plusone size="medium" href="xxxmyurlxxx"></g:plusone>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) {return;}
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+		<div class="fb-like" data-href="xxxmyurlxxx" data-send="false" data-width="450" data-show-faces="false"></div>
+		</div>
+	<!-- /div.entry-header --></div>
+	<div class="entry-body">
+	
+記念すべき Lokka からの第一回目の投稿です。
+<div>
+  <br />
+</div>
+<div>ようやくこのブログを WordPress から Lokka に移行できました。</div>
+<div>
+  <br />
+</div>
+<div>今までの手順の詳細は文末のリンクをたどってもらうとして、ざっくりと移行した手順を書き出してみます。</div>
+<div>
+  <br />
+</div>
+<div>
+  <ol>
+    <li>
+      素の Lokka が動く環境を用意します。方法は<a href="http://lokka.org/getting-started" target="_blank">Getting Started - Lokka</a>などを見て参考にしてください。僕はいつも通り Heroku に用意しました。
+    </li>
+    <li>
+      WordPress のエクスポート機能を利用し、<span class="Apple-style-span" style="color: rgb(77, 77, 77); font-family: arial, helvetica, clean, sans-serif; font-size: 14px; line-height: 21px; background-color: rgb(255, 255, 255); ">WordPress eXtended RSS と呼ばれる xml ファイルに</span>エクスポートします。僕が使っていた WordPress は古いバージョン（<span class="Apple-style-span" style="color: rgb(77, 77, 77); font-family: arial, helvetica, clean, sans-serif; font-size: 14px; line-height: 21px; background-color: rgb(255, 255, 255); ">ME2.0.5</span>）でエクスポート機能がついていなかったのですが、ローカルに最新の WordPress 3.2.1 を用意し、そこに mysql のダンプ/リストアでブログのデータを流し込んだところ、自動的にデータ構造がアップグレードされ、エクスポートできるようになりました。
+    </li>
+    <li>Lokka のインポート機能を使い xml ファイルをインポートします。</li>
+    <li>画像などのメディアファイルを WordPress から Lokka に移動します。</li>
+    <li><a href="https://github.com/champierre/lokka-redirect">lokka-redirect</a>プラグインをインストールし、WordPress 形式の URL を Lokka 形式の URL にリダイレクトするようにします。
+    </li>
+    <li>
+      他に必要なプラグインをインストールします。インストールしたプラグインは、<a href="https://github.com/champierre/lokka-facebook_like_button">lokka-facebook_like_button</a>、<a href="https://github.com/nkmrshn/lokka-hatena_bookmark_button">lokka-hatena_bookmark_button</a>、<a href="https://github.com/champierre/lokka-redirect_if_heroku">lokka-redirect_if_heroku</a>、
+      <a href="https://github.com/nkmrshn/lokka-tweet_button">lokka-tweet_button</a>
+      です。
+    </li>
+    <li>Heroku の Add-On、Custom Domains でブログのアドレス blog.champierre.com を登録します。</li>
+    <li>DNS を書き換えてblog.champierre.com へのアクセスがchampierre.heroku.com に向くようにします。</li>
+  </ol>
+  <div>
+    <br />
+  </div>
+  <div>一晩経ち DNS が書き換わったのが反映されて、めでたく移行完了です。</div>
+</div>
+<div>
+  <br />
+</div>
+<div>今 Lokka から投稿していて何だかうれしいというか安心した気持ちになります。</div>
+<div>
+  <br />
+</div>
+<div>この安心感は、普段 Ruby を使っているから、Ruby でできている Lokka なら問題が起こっても自分で直せるし、「こんな機能が欲しいなあ」というときに自分でプラグインを作って欲しい機能を簡単に追加できると思えるところから来ているのだと思います。</div>
+<div>
+  <br />
+</div>
+<div>Lokka はまだまだ荒削りなので、万人におすすめ、というわけではありませんが、僕のようにいつも Ruby を使っているという人だったら WordPress からの移行を考えてもいいと思います。</div>
+<div>
+  <br />
+</div>
+<div>
+  自分のブログが Lokka になったというのはデカイです。細かくいろんな機能が欲しくなってきました。
+  <a href="http://atnd.org/events/20685">Lokkathon</a>
+  に参加して、プラグインを作ったり、Lokka 本体へのパッチを送ったりと、引き続き Lokka を応援していきたいと思います。
+</div>
+<div>
+  <br />
+</div>
+<div>
+  <br />
+</div>
+<div>
+  <b>参考エントリ</b>
+</div>
+<div>
+  <br />
+</div>
+<div>
+  ≫
+  <a href="http://blog.champierre.com/929" target="_blank">WordPress のブログを Lokka に移行しようとしています(まだ途中) - 僕は発展途上技術者</a>
+</div>
+<div>
+  ≫
+  <a href="http://blog.champierre.com/930" target="_blank">WordPress のブログを Lokka に移行(第2部) - 僕は発展途上技術者</a>
+</div>
+<div>
+  ≫
+  <a href="http://blog.champierre.com/931" target="_blank">WordPress のブログを Lokka に移行(第3部) - Redirect プラグインを作りました - 僕は発展途上技術者</a>
+</div>
+	
+	
+			<p>&raquo; <a target="_blank" href="http://atnd.org/events/20402">Lokkathon #11 : ATND</a></p> 
+<p>に参加してきました。WordPress で書かれているこのブログを Lokka に移行するプロジェクトの３回目。</p> 
+<p>これまでやったことは、</p> 
+<p>&raquo; <a target="_blank" href="http://blog.champierre.com/archives/929">WordPress のブログを Lokka に移行しようとしています(まだ途中) : 僕は発展途上技術者</a></p> 
+<p>&raquo; <a target="_blank" href="http://blog.champierre.com/archives/930">WordPress のブログを Lokka に移行(第2部) : 僕は発展途上技術者</a></p> 
+<p>に書いています。</p> 
+<p>今回やりたかったことは WordPress スタイルの URL を Lokka スタイルの URL にリダイレクトすること。たとえばこのブログだと、今月のエントリーが見られる</p> 
+<p>http://blog.champierre.com/archives/date/2011/09/</p> 
+<p>という URL は Lokka 移行後は</p> 
+<p>http://blog.champierre.com/2011/09/</p> 
+<p>というスタイルの URL にリダイレクトしたい。</p> 
+<p>正規表現でリダイレクトのルールを作成すれば、その通りリダイレクトされるプラグインを作成することにしました。</p> 
+<h3>lokka-redirect プラグイン</h3> 
+<p>今回も <a target="_blank" href="https://twitter.com/#!/komagata">@komagata</a> さんにいろいろ聞いて、相当助けてもらいました。</p> 
+<p>当たり前ですが、Lokka を開発している本人に聞けばほとんどのことは解決、Lokkathon に参加することでかなり捗りました。</p> 
+<h4>見出しレベル4</h4>
+<p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+<p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+<h5>見出しレベル5</h5>
+<p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+<p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+
+<h6>見出しレベル6</h6>
+<p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+<p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+
+<p>&raquo; <a target="_blank" href="https://github.com/champierre/lokka-redirect">champierre/lokka-redirect - GitHub</a></p> 
+<p>からインストールできます。</p> 
+<p>redirect プラグインの管理画面で以下のようにルールを設定すれば、WordPress スタイルの URL を Lokka スタイルの URL にリダイレクトしてくれます。</p> 
+<div class="thumbnail"><a href="https://skitch.com/jishiha/fh3p3/lokka"><img style="max-width:638px" src="https://img.skitch.com/20110929-82mudkbrigt14np3xsfjfbafqn.medium.jpg" alt="僕は発展途上技術者 - Lokka" /></a></div> 
+<h3>次回 Lokkathon</h3> 
+<p>次回 Lokkathon は 10/5(水曜日)。</p> 
+<p>&raquo; <a target="_blank" href="http://atnd.org/events/20433">Lokkathon #12 : ATND</a></p> 
+<p>準備はひと通り整った感じなので、いよいよこのブログを Lokka に移行する日が来ました。</p> 
+<p>次のエントリーはもしかしたら、Lokka からかもしれません。楽しみです。</p> 
+
+<p>Facebookページ・アプリでハマるところシリーズ。</p>
+<p>RailsでFacebookアプリ作ります。FacebookアプリはIFRAME内のページをPOSTメソッドで呼び出します。エントリー一覧（/entries）のようなものをFacebookアプリのトップページにしようとしたらアレ？となります。（POSTしたらcreate呼ばれるから）</p>
+<p>オーマイゴッド！じゃあ/entries/newをPOSTメソッドも受け入れるようにしてこれをトップにしよう。しかしFacebookアプリは/で終わるURLしか指定できません。仕方ないので/entries/new/を受け入れるようにしよう・・・。</p>
+<p>しかしログインしたはずが情報が引き継がれません。おかしいな。</p>
+<pre class="prettyprint linenums">WARNING: Can't verify CSRF token authenticity</pre>
+<p>ログを見るとCSRF tokenのWARNING。考えてみりゃ当然ですが、FacebookからPOSTで呼ばれる時にはCSRF tokenなんぞ付いてないのでWARNINGが出ます。そして危ないのでsessionは一旦破棄されるわけです。自動ログアウト。</p> 
+
+<p>rails3.1でMySQLからやってくる文字列がASCII-8BITになっているのでto_jsonすると壊れる（to_jsonがencodingを見て処理するので）。sqlite3では起こらない。</p>
+<p>環境はSnow Leopard、ruby1.9.2-p290、homebrewで入れたmysql 5.1.54。</p>
+<pre class="prettyprint linenums">% rails new foo&#x000A;% cd foo&#x000A;% vi Gemfile&#x000A;(...)&#x000A;gem 'mysql'&#x000A;(...)&#x000A;% bundle&#x000A;% vi config/database.yml&#x000A;(...)&#x000A;development:&#x000A;  adapter: mysql&#x000A;  encoding: utf8&#x000A;  database: foo_development&#x000A;  pool: 5&#x000A;  username: root&#x000A;  password: &#x000A;  host: localhost&#x000A;  socket: /tmp/mysql.sock&#x000A;(...)&#x000A;% rails g model post title:string&#x000A;% rake db:create&#x000A;% rake db:migrate&#x000A;% vi db/seeds.rb&#x000A;Post.create!(title: 'うんｋ')&#x000A;% rake db:seed&#x000A;% rails c&#x000A;ruby-1.9.2-p290 :001 &gt; puts Post.first.title&#x000A;うんｋ&#x000A; =&gt; nil &#x000A;ruby-1.9.2-p290 :002 &gt; Post.first.title.encoding&#x000A; =&gt; #&lt;encoding:ascii-8bit&gt;&#x000A;ruby-1.9.2-p290 :003 &gt; puts Post.first.title.to_json&#x000A;"\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd"&#x000A; =&gt; nil</pre>
+<p>CentOS 5.6でも同じ。</p>
+<p>解決：</p>
+<p>mysql gemはruby1.9.1からのencodingに対応してない。だからmysql2を使えば解決でした。</p>
+<pre class="prettyprint linenums">% vi Gemfile&#x000A;(...)&#x000A;  gem 'mysql2'&#x000A;(...)&#x000A;% vi config/database.yml&#x000A;(...)&#x000A;  adapter: mysql2&#x000A;(...)&#x000A;% rails c&#x000A;ruby-1.9.2-p290 :001 &gt; Post.first.title.encoding&#x000A; =&gt; #&lt;Encoding:UTF-8&gt;</pre>
+<p>adapterにmysql2と書けるというところが盲点でした・・・。</p>
+
+	<!-- /div.entry-body --></div>
+	<div class="entry_info">
+	<span class="link_to_entry_comment"><%= link_to "#{t.comments}(#{post.comments.size})", "#{post.link}#comment_wrapper" %></span>
+	<%= post.tags_to_html %>
+	<!-- /div.entry-info --></div>
+	<!-- /div.entry --></div>
+	<!-- /div.entries --></div>
+	
+	<ul class="pager">
+		<li class="first jump"><a href="http://docs.komagata.org/?page=1">First</a></li>
+        <li class="previous jump"><a href="http://docs.komagata.org/?page=1">Previous</a></li>
+		<li class="page-1 active"><a href="http://blog.champierre.com/?page=1">1</a></li>
+		<li class="page-2"><a href="http://blog.champierre.com/?page=2">2</a></li>
+		<li class="page-3"><a href="http://blog.champierre.com/?page=3">3</a></li>
+		<li class="page-4"><a href="http://blog.champierre.com/?page=4">4</a></li>
+		<li class="page-5"><a href="http://blog.champierre.com/?page=5">5</a></li>
+		<li class="page-6"><a href="http://blog.champierre.com/?page=6">6</a></li>
+		<li class="page-7"><a href="http://blog.champierre.com/?page=7">7</a></li>
+		<li class="more">...</li>
+		<li class="next jump"><a href="http://blog.champierre.com/?page=2">Next</a></li>
+		<li class="last jump"><a href="http://blog.champierre.com/?page=67">Last</a></li>
+	</ul>
+<!-- /div.main-column --></div>
+
+<div class="sub-column span5">
+<section class="recentposts">
+	<h3>最近のエントリー</h3>
+	<ul>
+	<li><a href="/c2dm-on-rails-sample">c2dm_on_rails gem を利用する rails プロジェクトのサンプル</a></li>				
+	<li><a href="/wptolokka">ブログを WordPress から Lokka に移行しました</a></li>				
+	<li><a href="/931">WordPress のブログを Lokka に移行(第3部) - Redirect プラグインを作りました</a></li>				
+	<li><a href="/930">WordPress のブログを Lokka に移行(第2部)</a></li>				
+	<li><a href="/929">WordPress のブログを Lokka に移行しようとしています(まだ途中) </a></li>
+	</ul>
+</section>
+
+<section class="comments">
+	<h3>最近のコメント</h3>
+	<ul>
+	<li><a href="/c2dm-on-rails-sample">c2dm_on_rails gem を利用する rails プロジェクトのサンプル</a></li>				
+	<li><a href="/wptolokka">ブログを WordPress から Lokka に移行しました</a></li>				
+	<li><a href="/931">WordPress のブログを Lokka に移行(第3部) - Redirect プラグインを作りました</a></li>				
+	<li><a href="/930">WordPress のブログを Lokka に移行(第2部)</a></li>				
+	<li><a href="/929">WordPress のブログを Lokka に移行しようとしています(まだ途中) </a></li>
+	</ul>
+</section>
+
+<section class="tags">
+	<h3>タグ</h3>
+	<ul>
+	<li><a href="/c2dm-on-rails-sample">lokka</a></li>				
+	<li><a href="/wptolokka">rails</a></li>				
+	<li><a href="/931">child</a></li>				
+	<li><a href="/930">調布</a></li>				
+	<li><a href="/929">windows</a></li>
+	</ul>
+</section>
+
+
+<section class="archives">
+	<h3>アーカイブ</h3>
+	<ul>
+	<li><a href="/2011/10/">2011年10月</a></li>
+	<li><a href="/2011/09/">2011年09月</a></li>
+	<li><a href="/2011/08/">2011年08月</a></li>
+	<li><a href="/2011/07/">2011年07月</a></li>
+	<li><a href="/2011/05/">2011年05月</a></li>
+	<li><a href="/2011/04/">2011年04月</a></li>
+	<li><a href="/2011/03/">2011年03月</a></li>
+	<li><a href="/2010/11/">2010年11月</a></li>
+	<li><a href="/2010/07/">2010年07月</a></li>
+	<li><a href="/2010/05/">2010年05月</a></li>
+	<li><a href="/2010/04/">2010年04月</a></li>
+	<li><a href="/2010/03/">2010年03月</a></li>
+	<li><a href="/2010/02/">2010年02月</a></li>
+	<li><a href="/2010/01/">2010年01月</a></li>
+	<li><a href="/2009/12/">2009年12月</a></li>
+	<li><a href="/2009/11/">2009年11月</a></li>
+	<li><a href="/2009/10/">2009年10月</a></li>
+	<li><a href="/2009/09/">2009年09月</a></li>
+	<li><a href="/2009/07/">2009年07月</a></li>
+	<li><a href="/2009/06/">2009年06月</a></li>
+	<li><a href="/2009/05/">2009年05月</a></li>
+	<li><a href="/2009/04/">2009年04月</a></li>
+	<li><a href="/2009/03/">2009年03月</a></li>
+	<li><a href="/2009/02/">2009年02月</a></li>
+	<li><a href="/2009/01/">2009年01月</a></li>
+	<li><a href="/2008/12/">2008年12月</a></li>
+	<li><a href="/2008/11/">2008年11月</a></li>
+	<li><a href="/2008/10/">2008年10月</a></li>
+	<li><a href="/2008/09/">2008年09月</a></li>
+	<li><a href="/2008/08/">2008年08月</a></li>
+	<li><a href="/2008/07/">2008年07月</a></li>
+	<li><a href="/2008/06/">2008年06月</a></li>
+	<li><a href="/2008/05/">2008年05月</a></li>
+	<li><a href="/2008/04/">2008年04月</a></li>
+	<li><a href="/2008/03/">2008年03月</a></li>
+	<li><a href="/2008/02/">2008年02月</a></li>
+	<li><a href="/2008/01/">2008年01月</a></li>
+	<li><a href="/2007/12/">2007年12月</a></li>
+	<li><a href="/2007/11/">2007年11月</a></li>
+	<li><a href="/2007/10/">2007年10月</a></li>
+	<li><a href="/2007/09/">2007年09月</a></li>
+	<li><a href="/2007/08/">2007年08月</a></li>
+	<li><a href="/2007/07/">2007年07月</a></li>
+	<li><a href="/2007/06/">2007年06月</a></li>
+	<li><a href="/2007/05/">2007年05月</a></li>
+	<li><a href="/2007/04/">2007年04月</a></li>
+	<li><a href="/2007/03/">2007年03月</a></li>
+	<li><a href="/2007/02/">2007年02月</a></li>
+	<li><a href="/2007/01/">2007年01月</a></li>
+	<li><a href="/2006/12/">2006年12月</a></li>
+	<li><a href="/2006/11/">2006年11月</a></li>
+	<li><a href="/2006/10/">2006年10月</a></li>
+	<li><a href="/2006/09/">2006年09月</a></li>
+	<li><a href="/2006/08/">2006年08月</a></li>
+	<li><a href="/2006/07/">2006年07月</a></li>
+	<li><a href="/2006/05/">2006年05月</a></li>
+	<li><a href="/2006/03/">2006年03月</a></li>
+	<li><a href="/2005/09/">2005年09月</a></li>
+	<li><a href="/2005/07/">2005年07月</a></li>
+	<li><a href="/2005/06/">2005年06月</a></li>
+	<li><a href="/2005/05/">2005年05月</a></li>
+	<li><a href="/2005/04/">2005年04月</a></li>
+	<li><a href="/2005/03/">2005年03月</a></li>
+	<li><a href="/2005/02/">2005年02月</a></li>
+	<li><a href="/2005/01/">2005年01月</a></li>
+	<li><a href="/2004/09/">2004年09月</a></li>
+	<li><a href="/2004/07/">2004年07月</a></li>
+	<li><a href="/2004/02/">2004年02月</a></li>
+	<li><a href="/2003/11/">2003年11月</a></li>
+	<li><a href="/2003/10/">2003年10月</a></li>
+	<li><a href="/2003/07/">2003年07月</a></li>
+	<li><a href="/2002/07/">2002年07月</a></li>
+	<li><a href="/2002/05/">2002年05月</a></li>
+	<li><a href="/2002/04/">2002年04月</a></li>
+	<li><a href="/1969/12/">1969年12月</a></li>
+	</ul>
+</section>
+
+
+
+<!-- /div.sub-column --></div>
+
+<!-- /div.contents --></div>
+<!-- /div.container --></div>
+
+
+
+<!-- ====================
+	Footer
+==================== -->
+<footer>
+Copyright&copy; 僕は発展途上技術者 All Rights Reserved　-　Powered by <a href="http://lokka.org/" id="lokka_link">Lokka</a>
+</footer>
+
+
+</body>
+</html>
