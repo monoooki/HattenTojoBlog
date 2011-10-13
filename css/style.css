@@ -215,6 +215,50 @@ header {
 }
 
 
+/* comment */
+#comment_wrapper {}
+
+#comment_wrapper h3 {
+	background: #f6f6f6;
+	margin-bottom: 1em;
+	padding: 5px 10px;
+}
+
+#comments {
+	margin: 0;
+	padding: 10px;
+}
+
+#comments li {
+	list-style: none;
+	margin-bottom: 40px;
+	font-size: 14px;
+	color: #444;
+	line-height: 1.6;
+}
+
+#comments .footer {
+	border-top: 1px solid #ccc;
+	margin-top: 10px;
+	padding-top: 10px;
+}
+
+#comments .footer .name {
+	margin-right: 10px;
+}
+
+#comment_form {
+	padding-left: 0;
+}
+
+#comment_form label {
+	display: inline;
+}
+
+#comment_form input[type="submit"] {
+	padding: 10px;
+}
+
 /* -------------------------------
 	Sidebar
 ------------------------------- */
