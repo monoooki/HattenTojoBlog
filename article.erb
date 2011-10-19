@@ -1,7 +1,7 @@
 		<div class="entry">
 			<div class="entry-header">
 				<h2><a href="<%= post.link %>"><%= post.title %></a></h2>
-				<div class="entry-date"><%= post.updated_at.strftime("%Y.%m.%d") %></div>
+				<div class="entry-date"><%= post.created_at.strftime("%Y.%m.%d") %></div>
 				<div class="entry-meta">
 				<a href="http://b.hatena.ne.jp/entry/<%= post.link %>" class="hatena-bookmark-button" data-hatena-bookmark-title="<%= post.title %>" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 				<a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= post.link %>" data-count="horizontal" data-via="jishiha" data-lang="ja">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
@@ -16,6 +16,6 @@
 			<div class="entry_info">
 			<span class="link_to_entry_comment"><%= link_to "#{t.comments}(#{post.comments.size})", "#{post.link}#comment_wrapper" %></span>
 			<%= post.tags_to_html %>
-			<p class="date-time"><%= post.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></p>
+			<p class="date-time"><%= post.created_at.strftime("%Y/%m/%d %H:%M:%S") %></p>
 			<!-- /div.entry-info --></div>
 		<!-- /div.entry --></div>
