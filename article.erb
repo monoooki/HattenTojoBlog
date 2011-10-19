@@ -1,0 +1,24 @@
+		<div class="entry">
+			<div class="entry-header">
+				<h2><a href="<%= post.link %>"><%= post.title %></a></h2>
+				<div class="entry-date"><%= post.created_at.strftime("%Y.%m.%d") %></div>
+				<div class="entry-meta">
+				<a href="http://b.hatena.ne.jp/entry/<%= post.link %>" class="hatena-bookmark-button" data-hatena-bookmark-title="<%= post.title %>" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= post.link %>" data-count="horizontal" data-via="jishiha" data-lang="ja">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+				<!-- 次のタグを +1 ボタンを表示する箇所に貼り付けてください -->
+				<g:plusone size="medium" href="<%= post.link %>"></g:plusone>
+				<iframe src="//www.facebook.com/plugins/like.php?href=<%= post.link %>&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px;" allowTransparency="true"></iframe>
+				<!-- /div.entry-meta --></div>
+			<!-- /div.entry-header --></div>
+			<div class="entry-body">
+			<%= post.body %>
+			<!-- /div.entry-body --></div>
+			<div class="entry_info">
+		  <% if logged_in? %>
+        <span class="link_to_edit_link"><a href="<%= post.edit_link %>"><%= t.edit %></span>
+      <% end %>
+			<span class="link_to_entry_comment"><%= link_to "#{t.comments}(#{post.comments.size})", "#{post.link}#comment_wrapper" %></span>
+			<%= post.tags_to_html %>
+			<p class="date-time"><%= post.created_at.strftime("%Y/%m/%d %H:%M:%S") %></p>
+			<!-- /div.entry-info --></div>
+		<!-- /div.entry --></div>

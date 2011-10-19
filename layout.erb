@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="<%= @site.meta_description %>" />
+<meta name="keywords" content="<%= @site.meta_keywords %>" />
+<% if entry? %>
+  <title><%= @entry.title %> - <%= @site.title %></title>
+<% else %>
+  <title><%= @site.title %></title>
+<% end %>
+<link href="<%= @theme.path %>/js/google-code-prettify/prettify.css" rel="stylesheet">
+<link href="<%= @theme.path %>/css/bootstrap-1.0.0.css" rel="stylesheet">
+<link href="<%= @theme.path %>/css/style.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<script src="<%= @theme.path %>/js/google-code-prettify/prettify.js"></script>
+<script src="<%= @theme.path %>/js/application.js"></script>
+<script src="https://apis.google.com/js/plusone.js">{lang: 'ja'}</script>
+<!--[if IE]><script src="<%= @theme.path %>/js/html5.js"></script><![endif]-->
+<%= header %>
+</head>
+
+<body>
+<div class="container">
+
+<!-- ====================
+	Header
+==================== -->
+<header>
+<h1><a href="/"><img src="<%= @theme.path %>/images/logo.png" width="396" height="71" alt="<%= @site.title %>" /></a></h1>
+<div id="search">
+	<form action="/search/" method="get" id="searchform">
+	<input type="text" name="query" class="search_field medium">
+	<input type="image" src="<%= @theme.path %>/images/ico_loope.png" alt="検索する" title="検索する" class="loope" />
+	</form>
+<!-- /div#search --></div>
+</header>
+
+
+<!-- ====================
+	Contents
+==================== -->
+<div class="contents row">
+
+<div class="main-column span11">
+<%= yield %>
+<!-- /div.main-column --></div>
+
+<div class="sub-column span5">
+<%= partial "side" %>
+<!-- /div.sub-column --></div>
+
+<!-- /div.contents --></div>
+<!-- /div.container --></div>
+
+
+
+<!-- ====================
+	Footer
+==================== -->
+<footer>
+Copyright&copy; <%= @site.title %> All Rights Reserved　-　Powered by <%= link_to "Lokka", "http://lokka.org/", :id => "lokka_link" %>
+</footer>
+
+
+
+</body>
+</html>
