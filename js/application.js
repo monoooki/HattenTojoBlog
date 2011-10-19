@@ -40,7 +40,7 @@ $(document).ready(function(){
 
 
 // tekitouni style
-$("pre").addClass("prettyprint linenums");
+$("pre").addClass("prettyprint");
 
 // コメントフォーム
 $("#comment_form form").addClass("form-stacked");
